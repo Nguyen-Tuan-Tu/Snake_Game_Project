@@ -1,16 +1,22 @@
+# --- Unity Rác ---
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
+[Mm]emoryCaptures/
 UserSettings/
 
-MemoryCaptures/
-
+# --- Visual Studio Rác ---
+.vs/
+ExportedObj/
+.consulo/
 *.csproj
 *.unityproj
 *.sln
+*.suo
+*.tmp
 *.user
 *.userprefs
 *.pidb
@@ -21,5 +27,7 @@ MemoryCaptures/
 *.opendb
 *.VC.db
 
+# --- Hệ điều hành ---
 .DS_Store
 Thumbs.db
+desktop.ini
