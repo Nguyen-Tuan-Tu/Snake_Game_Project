@@ -24,6 +24,8 @@ public class SnakeController : MonoBehaviour
 
     // Các biến xử lý âm thanh
     public AudioClip eatSound; // Kéo file âm thanh ăn mồi vào đây
+
+    public GameObject eatEffectPrefab; // Kéo hiệu ứng ăn mồi vào đây
     public AudioClip collideSound; // // Kéo file âm thanh va chạmh vào đây
     private AudioSource _audioSource; // Biến để điều khiển cái loa
 
@@ -247,6 +249,11 @@ public class SnakeController : MonoBehaviour
         {
             // Phát ra âm thanh khi ăn mồi
             _audioSource.PlayOneShot(eatSound);
+            // 1. Tạo hiệu ứng tại đúng vị trí quả táo vừa bị ăn [cite: 2026-03-01]
+             GameObject effect = Instantiate(eatEffectPrefab, other.transform.position, Quaternion.identity);
+
+            // 2. Tự động xóa hiệu ứng sau 1 giây để tránh rác bộ nhớ [cite: 2026-03-01]
+            Destroy(effect, 1f);
 
             // Tính điểm
             UpdateScore();

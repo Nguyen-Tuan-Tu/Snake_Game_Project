@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 06cda8ef464bfcc4697c3f03091077c5
+guid: 5c4f296cf1a549543b0b952212041e40
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Snake_0
+      name: Head3
       rect:
         serializedVersion: 2
         x: 6
-        y: 70
-        width: 180
-        height: 180
+        y: 340
+        width: 155
+        height: 154
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,62 +124,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1c90ffb9a4be8746a8f4ee057d859a7
-      internalID: 769939275
+      spriteID: 5cfe603e4da397a40833a47f35ce5bdd
+      internalID: -744819762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Snake_1
+      name: DR
       rect:
         serializedVersion: 2
-        x: 194
-        y: 192
-        width: 60
-        height: 62
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 210
+        y: 338
+        width: 118
+        height: 121
+      alignment: 9
+      pivot: {x: 0.35, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f95dfd846982df54e9c4aeae48641883
-      internalID: -2044557353
+      spriteID: d7d20579cd07c8f488828283ca148e8f
+      internalID: -1810755687
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Snake_2
+      name: DL
       rect:
         serializedVersion: 2
-        x: 256
-        y: 194
-        width: 62
-        height: 60
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 340
+        y: 339
+        width: 115
+        height: 119
+      alignment: 9
+      pivot: {x: 0.65, y: 0.65}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 249c42ef02b9a754cbe25847fccb648d
-      internalID: 605614073
+      spriteID: 226439fb487be6247bc14cee7f4874cc
+      internalID: -187216598
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Snake_3
+      name: Head2
       rect:
         serializedVersion: 2
-        x: 194
-        y: 130
-        width: 62
-        height: 60
+        x: 5
+        y: 180
+        width: 157
+        height: 148
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,62 +187,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7d19d43aaa52ea499ba92f7fc750ea3
-      internalID: 256000644
+      spriteID: 74a940822eb834e41928ea4954524165
+      internalID: 1984326497
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Snake_4
+      name: UR
       rect:
         serializedVersion: 2
-        x: 258
-        y: 130
-        width: 60
-        height: 62
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 211
+        y: 208
+        width: 117
+        height: 120
+      alignment: 9
+      pivot: {x: 0.35, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d64234bef2944041955cac9e70b81bc
-      internalID: 2032217135
+      spriteID: 955b96ee5d27d9940aac4a4957d0079a
+      internalID: 22965765
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Snake_5
+      name: UL
       rect:
         serializedVersion: 2
-        x: 198
-        y: 69
-        width: 52
-        height: 59
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 339
+        y: 208
+        width: 118
+        height: 120
+      alignment: 9
+      pivot: {x: 0.65, y: 0.35}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e64c197ee92d00e4cb72b58999c77ada
-      internalID: 1147418461
+      spriteID: 45288f688cd7b2e4b8c6b84be42036c1
+      internalID: 742264421
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Snake_6
+      name: Head1
       rect:
         serializedVersion: 2
-        x: 261
-        y: 70
-        width: 59
-        height: 52
+        x: 6
+        y: 22
+        width: 155
+        height: 139
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,20 +250,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 87c2bceb8d6a6d946b6f196b64a903c2
-      internalID: -598465608
+      spriteID: 12da7f1d9144828488138ce3a3266764
+      internalID: -1871222010
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Food
+      name: Tail
       rect:
         serializedVersion: 2
-        x: 4
-        y: 1
-        width: 56
-        height: 61
+        x: 210
+        y: 4
+        width: 78
+        height: 158
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,20 +271,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44d95e4fc88487e4183547a610046bf8
-      internalID: 1843012548
+      spriteID: 3d10fed040701d842ad845c2f69eb92b
+      internalID: 933154526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Snake_8
+      name: Body
       rect:
         serializedVersion: 2
-        x: 192
-        y: 6
-        width: 59
-        height: 52
+        x: 378
+        y: 5
+        width: 78
+        height: 157
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -292,29 +292,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b37b678c9f9b914793d0e30d51ea6d1
-      internalID: 25404119
+      spriteID: d666c4590c7036d4eae468989f7c0fac
+      internalID: 788158758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Snake_9
+      name: Blue_Snake_0
       rect:
         serializedVersion: 2
-        x: 262
-        y: 0
-        width: 52
-        height: 59
+        x: 481
+        y: 293
+        width: 3
+        height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dbd6d1fbd75b6884c8d4c5e9c1f48a3b
-      internalID: -219285084
+      spriteID: 9215c0e5b3be3114d89a608f0a9db356
+      internalID: 1770492863
       vertices: []
       indices: 
       edges: []
@@ -330,16 +330,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Food: 1843012548
-      Snake_0: 769939275
-      Snake_1: -2044557353
-      Snake_2: 605614073
-      Snake_3: 256000644
-      Snake_4: 2032217135
-      Snake_5: 1147418461
-      Snake_6: -598465608
-      Snake_8: 25404119
-      Snake_9: -219285084
+      Blue_Snake_0: 1770492863
+      Body: 788158758
+      DL: -187216598
+      DR: -1810755687
+      Head1: -1871222010
+      Head2: 1984326497
+      Head3: -744819762
+      Tail: 933154526
+      UL: 742264421
+      UR: 22965765
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

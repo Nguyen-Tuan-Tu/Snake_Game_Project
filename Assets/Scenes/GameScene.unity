@@ -6471,6 +6471,7 @@ GameObject:
   - component: {fileID: 2054982125}
   - component: {fileID: 2054982124}
   - component: {fileID: 2054982123}
+  - component: {fileID: 2054982126}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -6564,7 +6565,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1887407414, guid: 06cda8ef464bfcc4697c3f03091077c5, type: 3}
+  m_Sprite: {fileID: 1843012548, guid: 06cda8ef464bfcc4697c3f03091077c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6590,6 +6591,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2054982126
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054982122}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f2a358709897c344cbceea679e20dd36, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2131847305
 GameObject:
   m_ObjectHideFlags: 0
@@ -6884,12 +6906,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1049367614, guid: b9713fef631723142b7bfb0d5578c2af, type: 3}
+  m_Sprite: {fileID: -1871222010, guid: 5c4f296cf1a549543b0b952212041e40, type: 3}
   m_Color: {r: 0.98490566, g: 0.98490566, b: 0.98490566, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.3333334, y: 1.3333334}
+  m_Size: {x: 1.55, y: 1.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -6973,8 +6995,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.3333334, y: 1.3333334}
-    newSize: {x: 1.3333334, y: 1.3333334}
+    oldSize: {x: 1.55, y: 1.39}
+    newSize: {x: 1.55, y: 1.39}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -6998,16 +7020,17 @@ MonoBehaviour:
   bodyPrefab: {fileID: 1069136224330495697, guid: 575bd5978ee24574a880f49936824c9b, type: 3}
   tailPrefab: {fileID: 5981561350325342633, guid: dfdda57b3ab1ade46a38d27b5c15361a, type: 3}
   eatSound: {fileID: 8300000, guid: 93537b48670b42d4a995ddfdcff0c12c, type: 3}
+  eatEffectPrefab: {fileID: 7194952087870367276, guid: a56fa166c27c1b64a90204cdc43a72fd, type: 3}
   collideSound: {fileID: 8300000, guid: c9edfcab5d5b3ed4495babe9d6196898, type: 3}
   scoreText: {fileID: 1883254939}
   PlayerScoreText: {fileID: 277181820}
-  cornerUL: {fileID: 438205103, guid: b9713fef631723142b7bfb0d5578c2af, type: 3}
-  cornerUR: {fileID: -1606894382, guid: b9713fef631723142b7bfb0d5578c2af, type: 3}
-  cornerDL: {fileID: -1005558067, guid: b9713fef631723142b7bfb0d5578c2af, type: 3}
-  cornerDR: {fileID: -1400448638, guid: b9713fef631723142b7bfb0d5578c2af, type: 3}
-  bodySprite: {fileID: -373117475, guid: b9713fef631723142b7bfb0d5578c2af, type: 3}
-  headUp: {fileID: 1049367614, guid: b9713fef631723142b7bfb0d5578c2af, type: 3}
-  tailUp: {fileID: -2024190152, guid: b9713fef631723142b7bfb0d5578c2af, type: 3}
+  cornerUL: {fileID: 742264421, guid: 5c4f296cf1a549543b0b952212041e40, type: 3}
+  cornerUR: {fileID: 22965765, guid: 5c4f296cf1a549543b0b952212041e40, type: 3}
+  cornerDL: {fileID: -187216598, guid: 5c4f296cf1a549543b0b952212041e40, type: 3}
+  cornerDR: {fileID: -1810755687, guid: 5c4f296cf1a549543b0b952212041e40, type: 3}
+  bodySprite: {fileID: 788158758, guid: 5c4f296cf1a549543b0b952212041e40, type: 3}
+  headUp: {fileID: -1871222010, guid: 5c4f296cf1a549543b0b952212041e40, type: 3}
+  tailUp: {fileID: 933154526, guid: 5c4f296cf1a549543b0b952212041e40, type: 3}
 --- !u!82 &2140952050
 AudioSource:
   m_ObjectHideFlags: 0
