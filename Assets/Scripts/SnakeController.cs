@@ -45,6 +45,15 @@ public class SnakeController : MonoBehaviour
     public Sprite bodySprite;
     public Sprite headUp;     
     public Sprite tailUp;
+
+    public static SnakeController Instance;
+    private void Awake()
+    {
+        // Gán chính cái Script này vào biến Instance ngay khi game khởi động [cite: 2026-03-01]
+        if (Instance == null) {
+            Instance = this;
+        }
+    }
     private void Start()
     {
         // Lấy tốc độ mà người chơi vừa chọn ở Menu
@@ -260,7 +269,10 @@ public class SnakeController : MonoBehaviour
 
             // Gọi hàm thêm thân rắn
             Grow();
+            
 
+            // Random 1 chữ cái
+            AlphabetManager.Instance.SpawnNewSet();
             // Tạo thức ăn mới
             RandomizeFoodPosition(other.gameObject);
         }
@@ -284,11 +296,25 @@ public class SnakeController : MonoBehaviour
         }
     }
     //_________HÀM TẠO THỨC ĂN TẠI VỊ TRÍ NGẪU NHIÊN_________
-    private void RandomizeFoodPosition(GameObject food)
+    public void RandomizeFoodPosition(GameObject food)
     {
-        float x = (int)Random.Range(-16,16);
-        float y = (int)Random.Range(-8,5);
-        food.transform.position = new Vector3(x,y,0);
+        Vector3 newPos;
+        bool isOverlapping;
+        int safetyBreak = 0; // Tránh vòng lặp vô tận [cite: 2026-03-01]
+
+        do {
+            float x = Mathf.Round(Random.Range(-15f, 15f));
+            float y = Mathf.Round(Random.Range(-7f, 4f));
+            newPos = new Vector3(x, y, 0f);
+
+            // Kiểm tra xem có Collider nào tại vị trí này không (trừ chính nó) [cite: 2026-03-01]
+            Collider2D hit = Physics2D.OverlapCircle(newPos, 1.5f);
+            isOverlapping = (hit != null && hit.gameObject != food);
+            
+            safetyBreak++;
+        } while (isOverlapping && safetyBreak < 100); 
+
+        food.transform.position = newPos;
     }
 
     //__________HÀM TÍNH ĐIỂM__________
