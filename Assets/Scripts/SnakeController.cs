@@ -50,9 +50,7 @@ public class SnakeController : MonoBehaviour
     private void Awake()
     {
         // Gán chính cái Script này vào biến Instance ngay khi game khởi động [cite: 2026-03-01]
-        if (Instance == null) {
-            Instance = this;
-        }
+        if (Instance == null) Instance = this;
     }
     private void Start()
     {
@@ -269,7 +267,21 @@ public class SnakeController : MonoBehaviour
 
             // Gọi hàm thêm thân rắn
             Grow();
-            
+            if(_score >= 10)
+            {
+                MySceneManager.Instance.ShowVictory();
+                // Tìm đối tượng phát nhạc nền trên Hierarchy và tắt nó đi
+                GameObject bgm = GameObject.Find("BackgroundMusic");
+
+                if (bgm != null)
+                {
+                    AudioSource bgmSource = bgm.GetComponent<AudioSource>();
+                    if (bgmSource != null)
+                    {
+                        bgmSource.Stop(); 
+                    }
+                }
+            }
 
             // Random 1 chữ cái
             AlphabetManager.Instance.SpawnNewSet();
@@ -280,10 +292,9 @@ public class SnakeController : MonoBehaviour
         else if (other.CompareTag("Obstacle")) 
         {
             _audioSource.PlayOneShot(collideSound);
-            // 1. Tìm đối tượng phát nhạc nền trên Hierarchy
+            // Tìm đối tượng phát nhạc nền trên Hierarchy và tắt nó đi
             GameObject bgm = GameObject.Find("BackgroundMusic");
 
-            // 2. Nếu tìm thấy thì bảo nó im lặng ngay lập tức
             if (bgm != null)
             {
                 AudioSource bgmSource = bgm.GetComponent<AudioSource>();
@@ -299,22 +310,33 @@ public class SnakeController : MonoBehaviour
     public void RandomizeFoodPosition(GameObject food)
     {
         Vector3 newPos;
-        bool isOverlapping;
-        int safetyBreak = 0; // Tránh vòng lặp vô tận [cite: 2026-03-01]
+        bool isInvalid;
+        int safetyBreak = 0;
+
+        // Tạm thời tắt Collider của chính nó để không tự va chạm với chính mình [cite: 2026-03-02]
+        Collider2D myCol = food.GetComponent<Collider2D>();
+        if (myCol != null) myCol.enabled = false;
 
         do {
             float x = Mathf.Round(Random.Range(-15f, 15f));
             float y = Mathf.Round(Random.Range(-7f, 4f));
             newPos = new Vector3(x, y, 0f);
 
-            // Kiểm tra xem có Collider nào tại vị trí này không (trừ chính nó) [cite: 2026-03-01]
-            Collider2D hit = Physics2D.OverlapCircle(newPos, 1.5f);
-            isOverlapping = (hit != null && hit.gameObject != food);
+            // QUAN TRỌNG: Cập nhật vị trí vào hệ thống vật lý ngay lập tức [cite: 2026-03-01]
+            food.transform.position = newPos;
+            Physics2D.SyncTransforms(); 
+
+            // Kiểm tra vùng 2.5 ô xung quanh có chạm chữ khác không [cite: 2026-03-01]
+            // Sử dụng OverlapBox vì các chữ cái của bạn hình vuông
+            Collider2D hit = Physics2D.OverlapBox(newPos, new Vector2(2.5f, 2.5f), 0f);
+            
+            isInvalid = (hit != null); // Nếu chạm bất cứ thứ gì khác là không hợp lệ [cite: 2026-03-01]
             
             safetyBreak++;
-        } while (isOverlapping && safetyBreak < 100); 
+        } while (isInvalid && safetyBreak < 100);
 
-        food.transform.position = newPos;
+        // Bật lại Collider sau khi đã tìm được chỗ đỗ xe an toàn [cite: 2026-03-02]
+        if (myCol != null) myCol.enabled = true;
     }
 
     //__________HÀM TÍNH ĐIỂM__________

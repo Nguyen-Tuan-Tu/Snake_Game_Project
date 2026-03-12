@@ -5,10 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MySceneManager : MonoBehaviour
 {
+    public static MySceneManager Instance;
     public GameObject pauseUI;
     public GameObject blurPanel;
 
     public GameObject gameOverPanel;
+
+    public GameObject VictoryPanel;
+
+    private void Awake()
+    {
+        if(Instance == null ) Instance = this;
+    }
 
     public void StartGame()
     {
@@ -44,6 +52,12 @@ public class MySceneManager : MonoBehaviour
     public void ShowGameOver()
     {
         gameOverPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void ShowVictory()
+    {
+        VictoryPanel.SetActive(true);
         Time.timeScale = 0f;
     }
 }
