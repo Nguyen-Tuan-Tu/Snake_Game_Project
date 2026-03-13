@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class AlphabetManager : MonoBehaviour
 {
@@ -9,20 +10,17 @@ public class AlphabetManager : MonoBehaviour
     [Header("Cài đặt chữ cái")]
     public Sprite[] alphabetSprite; // Kéo toàn bộ chữ cái đã cắt vào đây
     public GameObject letterFoodPrefab; // Kéo cái Prefab LetterFood vào đây
-    public int foodCount = 2;
-
+    //public int foodCount = 2;
+    [Header("Logic từ vựng")]
+    public string targetWord = "CHICKEN";
+    private int charIndex = 0;  // Thứ tự của kí tự trong từ
     // Danh sách để quản lý các chữ cái đang hiện có trên sân
     private List<GameObject> activeFood = new List<GameObject>();
     private void Awake()
     {
-        // Khởi tạo Instance ngay khi game load để các script khác dùng được [cite: 2026-03-01]
-        //if (Instance == null) {
-            Instance = this;
-       // } else {
-        //    Destroy(gameObject);
-        //}
+        Instance = this;
     }
-    // Tạo bộ 3 chữ cái đầu tiên khi vào game
+    
     private void Start()
     {
         SpawnNewSet();
@@ -36,20 +34,72 @@ public class AlphabetManager : MonoBehaviour
         }
 
         activeFood.Clear();
-        // 2.Tạo 3 chữ mới ở 3 vị trí mới
-        for( int i = 0; i < foodCount; i++)
+
+        // 2. Sinh ra 1 kí tự đúng 
+        char correctChar = targetWord[charIndex];
+        SpawnLetter(correctChar, true);
+
+        // 3.Tạo 2 kí tự sai ngẫu nhiên và khác vs kí tự đúng
+        List<char> spawnedChars = new List<char>();
+        spawnedChars.Add(correctChar); // Đưa kí tự đúng vào danh sách đã tồn tại
+
+        for(int i = 0; i < 2 ; i++)
         {
-            GameObject newFood = Instantiate(letterFoodPrefab);
+            char wrongChar;
+            do
+            {
+                wrongChar = (char)Random.Range('A', 'Z' + 1);
+            }
+            // Vòng lặp này sẽ chạy cho đến khi wrongChar KHÁC chữ đúng 
+            // và KHÁC luôn cả chữ sai đã sinh trước đó
+            while ( spawnedChars.Contains(wrongChar));
 
-            // Set chữ ngãu nhiên
-            int randomIndex = Random.Range(0, alphabetSprite.Length);
-            newFood.GetComponent<SpriteRenderer>().sprite = alphabetSprite[randomIndex];
+            spawnedChars.Add(wrongChar); // Lưu lại chữ sai vừa chọn
+            SpawnLetter(wrongChar, false);
+        }
+         
+    }
 
-            // Set vị trí ngẫu nhiên
-            SnakeController.Instance.RandomizeFoodPosition(newFood);
+    // Hàm phụ để tạo kí tự
 
-            // Thêm vào danh sách để quản lý
-            activeFood.Add(newFood);
+    private void SpawnLetter(char character, bool isCorrect)
+    {
+        GameObject newFoood = Instantiate(letterFoodPrefab);
+        LetterItem iteam = newFoood.GetComponent<LetterItem>();
+
+        // Bây giờ 'character' đã được xác định, không còn lỗi nữa!
+        int spriteIndex = character - 'A';
+        
+        // Kiểm tra xem index có nằm trong mảng không để tránh lỗi văng game
+        if (spriteIndex >= 0 && spriteIndex < alphabetSprite.Length)
+        {
+            Sprite letterSprite = alphabetSprite[spriteIndex];
+
+            // Gán dữ liệu vào Script LetterItem trên Prefab
+            iteam.myCharacter = character;
+            iteam.isCorrect = isCorrect;
+            iteam.mySprite = letterSprite;
+
+            newFoood.GetComponent<SpriteRenderer>().sprite = letterSprite;
+            SnakeController.Instance.RandomizeFoodPosition(newFoood);
+            activeFood.Add(newFoood);
+        }
+        else
+        {
+            Debug.LogError("Lỗi rồi ní: Ký tự " + character + " không tìm thấy Sprite tương ứng!");
+        }
+    }
+
+    public void NextLetter()
+    {
+        charIndex++;
+        if(charIndex < targetWord.Length)
+        {
+            SpawnNewSet();
+        }
+        else
+        {
+            MySceneManager.Instance.ShowVictory();
         }
     }
 }

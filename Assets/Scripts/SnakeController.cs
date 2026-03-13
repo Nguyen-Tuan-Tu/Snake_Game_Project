@@ -24,6 +24,11 @@ public class SnakeController : MonoBehaviour
 
     // Các biến xử lý âm thanh
     public AudioClip eatSound; // Kéo file âm thanh ăn mồi vào đây
+    public AudioClip wrongSound; // Âm thanh khi ăn sau kí tự
+
+    public GameObject[] Hearts;
+
+    public int wrongCount = 0;
 
     public GameObject eatEffectPrefab; // Kéo hiệu ứng ăn mồi vào đây
     public AudioClip collideSound; // // Kéo file âm thanh va chạmh vào đây
@@ -252,59 +257,62 @@ public class SnakeController : MonoBehaviour
     //_________HÀM PHÁT HIỆN VA CHẠM________
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag("Food"))
+        if (other.CompareTag("Food"))
         {
-            // Phát ra âm thanh khi ăn mồi
-            _audioSource.PlayOneShot(eatSound);
-            // 1. Tạo hiệu ứng tại đúng vị trí quả táo vừa bị ăn [cite: 2026-03-01]
-             GameObject effect = Instantiate(eatEffectPrefab, other.transform.position, Quaternion.identity);
+            // 1. Lấy thông tin từ chữ cái vừa đụng trúng
+            LetterItem item = other.GetComponent<LetterItem>();
 
-            // 2. Tự động xóa hiệu ứng sau 1 giây để tránh rác bộ nhớ [cite: 2026-03-01]
-            Destroy(effect, 1f);
-
-            // Tính điểm
-            UpdateScore();
-
-            // Gọi hàm thêm thân rắn
-            Grow();
-            if(_score >= 10)
+            // KIỂM TRA: NẾU ĂN ĐÚNG CHỮ [cite: 2026-03-01]
+            if (item != null && item.isCorrect)
             {
-                MySceneManager.Instance.ShowVictory();
-                // Tìm đối tượng phát nhạc nền trên Hierarchy và tắt nó đi
-                GameObject bgm = GameObject.Find("BackgroundMusic");
+                _audioSource.PlayOneShot(eatSound);
+                GameObject effect = Instantiate(eatEffectPrefab, other.transform.position, Quaternion.identity);
+                Destroy(effect, 1f);
 
-                if (bgm != null)
-                {
-                    AudioSource bgmSource = bgm.GetComponent<AudioSource>();
-                    if (bgmSource != null)
-                    {
-                        bgmSource.Stop(); 
-                    }
-                }
+                // Gửi Sprite lên bảng Keywords và tăng độ dài rắn
+                WordManager.Instance.CollectLetter(item.mySprite);
+                Grow();
+
+                // Gọi AlphabetManager để tiến tới chữ cái tiếp theo và sinh bộ mới
+                // Hàm NextLetter này sẽ tự kiểm tra thắng cuộc nếu hết từ CHICKEN [cite: 2026-03-01]
+                AlphabetManager.Instance.NextLetter(); 
             }
+            // KIỂM TRA: NẾU ĂN SAI CHỮ (Gây nhiễu)
+            else 
+            {
+                if (wrongCount < Hearts.Length)
+                {
+                    Hearts[wrongCount].SetActive(false);
+                }
+                wrongCount++;
+                if(wrongCount >= 3)
+                {
+                    MySceneManager.Instance.ShowGameOver();
+                }
+                // Phát âm thanh khi ăn sai kí tự
+                _audioSource.PlayOneShot(wrongSound);
 
-            // Random 1 chữ cái
-            AlphabetManager.Instance.SpawnNewSet();
-            // Tạo thức ăn mới
-            RandomizeFoodPosition(other.gameObject);
+                // Tùy chọn: Sinh lại bộ chữ mới ở vị trí khác để làm khó
+                AlphabetManager.Instance.SpawnNewSet();
+            }
         }
-        // 2. Nếu đâm vào Tường (Obstacle) HOẶC đâm vào Thân mình (Body) -> Chết
         else if (other.CompareTag("Obstacle")) 
         {
-            _audioSource.PlayOneShot(collideSound);
-            // Tìm đối tượng phát nhạc nền trên Hierarchy và tắt nó đi
-            GameObject bgm = GameObject.Find("BackgroundMusic");
-
-            if (bgm != null)
-            {
-                AudioSource bgmSource = bgm.GetComponent<AudioSource>();
-                if (bgmSource != null)
-                {
-                    bgmSource.Stop(); 
-                }
-            }
-            EndGame();
+            HandleGameOver();
         }
+    }
+
+    // Gom nhóm đoạn tắt nhạc và EndGame vào một hàm cho gọn code ní nhé
+    private void HandleGameOver()
+    {
+        _audioSource.PlayOneShot(collideSound);
+        GameObject bgm = GameObject.Find("BackgroundMusic");
+        if (bgm != null)
+        {
+            AudioSource bgmSource = bgm.GetComponent<AudioSource>();
+            if (bgmSource != null) bgmSource.Stop();
+        }
+        EndGame();
     }
     //_________HÀM TẠO THỨC ĂN TẠI VỊ TRÍ NGẪU NHIÊN_________
     public void RandomizeFoodPosition(GameObject food)
@@ -340,11 +348,11 @@ public class SnakeController : MonoBehaviour
     }
 
     //__________HÀM TÍNH ĐIỂM__________
-    private void UpdateScore()
-    {
-        _score++;
-        scoreText.text = "Score : " + _score.ToString();
-    }
+    // private void UpdateScore()
+    // {
+    //     _score++;
+    //     scoreText.text = "Score : " + _score.ToString();
+    // }
     public void UpdateSpeedUI()
     {
         string speedName = "";
@@ -353,7 +361,7 @@ public class SnakeController : MonoBehaviour
         else speedName = "Medium";
 
         // Gán nội dung vào bảng hiển thị
-        speedDisplayText.text = "Snake Speed : " + speedName;
+        speedDisplayText.text = "" + speedName;
     }
 
     public void ShowPlayerScore()
