@@ -55,10 +55,12 @@ public class SnakeController : MonoBehaviour
     private void Awake()
     {
         // Gán chính cái Script này vào biến Instance ngay khi game khởi động [cite: 2026-03-01]
-        if (Instance == null) Instance = this;
+        Instance = this;
     }
     private void Start()
     {
+        // Chưa bắt đầu chơi ngay
+        MySceneManager.Instance.ShowReadPanel();
         // Lấy tốc độ mà người chơi vừa chọn ở Menu
         moveInterval = GameSettings.snakeSpeed;
         // Thêm đầu vào List
@@ -81,9 +83,9 @@ public class SnakeController : MonoBehaviour
     private void EndGame()
     {
         FindObjectOfType<MySceneManager>().ShowGameOver();
-        ShowPlayerScore();
+        //ShowPlayerScore();
         Time.timeScale = 0;
-        Debug.Log("Thua rồi cưng ơi^_^");
+        //Debug.Log("Thua rồi cưng ơi^_^");
     }
     // Hàm update: Chạy liên tục mỗi khung hình
     private void Update()
@@ -228,7 +230,7 @@ public class SnakeController : MonoBehaviour
                 bool isU = (prevPos.y > segment.position.y || nextPos.y > segment.position.y);
                 bool isD = (prevPos.y < segment.position.y || nextPos.y < segment.position.y);
 
-                // Gán đúng theo số thứ tự Tú đánh dấu
+                // Gán đúng theo số thứ tự đã đánh dấu
                 if (isL && isU) sr.sprite = cornerUL;      // Số 1
                 else if (isR && isU) sr.sprite = cornerUR; // Số 2
                 else if (isR && isD) sr.sprite = cornerDR; // Số 3
@@ -288,11 +290,12 @@ public class SnakeController : MonoBehaviour
                 if(wrongCount >= 3)
                 {
                     MySceneManager.Instance.ShowGameOver();
+                    HandleGameOver();
                 }
                 // Phát âm thanh khi ăn sai kí tự
                 _audioSource.PlayOneShot(wrongSound);
 
-                // Tùy chọn: Sinh lại bộ chữ mới ở vị trí khác để làm khó
+                // Tùy chọn: Sinh lại bộ chữ mới ở vị trí khác
                 AlphabetManager.Instance.SpawnNewSet();
             }
         }
@@ -302,16 +305,17 @@ public class SnakeController : MonoBehaviour
         }
     }
 
-    // Gom nhóm đoạn tắt nhạc và EndGame vào một hàm cho gọn code ní nhé
-    private void HandleGameOver()
+    // Gom nhóm đoạn tắt nhạc và EndGame vào một hàm
+    public void HandleGameOver()
     {
         _audioSource.PlayOneShot(collideSound);
-        GameObject bgm = GameObject.Find("BackgroundMusic");
-        if (bgm != null)
-        {
-            AudioSource bgmSource = bgm.GetComponent<AudioSource>();
-            if (bgmSource != null) bgmSource.Stop();
-        }
+        // GameObject bgm = GameObject.Find("BackgroundMusic");
+        // if (bgm != null)
+        // {
+        //     AudioSource bgmSource = bgm.GetComponent<AudioSource>();
+        //     if (bgmSource != null) bgmSource.Stop();
+        // }
+        AudioManager.Instance.MuteBGM();
         EndGame();
     }
     //_________HÀM TẠO THỨC ĂN TẠI VỊ TRÍ NGẪU NHIÊN_________

@@ -99,6 +99,14 @@ public class AlphabetManager : MonoBehaviour
         }
         else
         {
+            // Tắt nhạc nền game
+            GameObject bgm = GameObject.Find("BackgroundMusic");
+            if (bgm != null)
+            {
+                AudioSource bgmSource = bgm.GetComponent<AudioSource>();
+                if (bgmSource != null) bgmSource.Stop();
+            }
+            // Hiện bảng Victory
             MySceneManager.Instance.ShowVictory();
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class MySceneManager : MonoBehaviour
@@ -12,6 +13,10 @@ public class MySceneManager : MonoBehaviour
     public GameObject gameOverPanel;
 
     public GameObject VictoryPanel;
+
+    public GameObject ReadyPanel;
+
+    public TextMeshProUGUI CountDownText;
 
     private void Awake()
     {
@@ -59,5 +64,41 @@ public class MySceneManager : MonoBehaviour
     {
         VictoryPanel.SetActive(true);
         Time.timeScale = 0f;
+    }
+    public void ShowReadPanel()
+    {
+        ReadyPanel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+    public void ReadyGame()
+    {
+        ReadyPanel.SetActive(false);
+        StartCoroutine(CountdownRoutine());
+    }
+
+    IEnumerator CountdownRoutine()
+    {
+        CountDownText.gameObject.SetActive(true);
+        CountDownText.text = "3";
+        yield return new WaitForSecondsRealtime(1f);
+        CountDownText.gameObject.SetActive(false);
+
+        CountDownText.gameObject.SetActive(true);
+        CountDownText.text = "2";
+        yield return new WaitForSecondsRealtime(1f);
+        CountDownText.gameObject.SetActive(false);
+
+        CountDownText.gameObject.SetActive(true);
+        CountDownText.text = "1";
+        yield return new WaitForSecondsRealtime(1f);
+        CountDownText.gameObject.SetActive(false);
+
+        CountDownText.gameObject.SetActive(true);
+        CountDownText.text = "GO";
+        yield return new WaitForSecondsRealtime(0.5f);
+        CountDownText.gameObject.SetActive(false);
+
+        Time.timeScale = 1f;
+        AudioManager.Instance.UnmuteBGM();
     }
 }
