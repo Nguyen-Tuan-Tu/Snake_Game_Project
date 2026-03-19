@@ -70,7 +70,7 @@ public class SnakeController : MonoBehaviour
         GameObject tail = Instantiate(tailPrefab);
         // Đặt ví trí cho đuôi
         tail.transform.position = transform.position - Vector3.right;
-
+        tail.transform.rotation = transform.rotation * Quaternion.Euler(0, 0, 180);
         // Thêm đuôi vào List
         _segments.Add(tail.transform);
 

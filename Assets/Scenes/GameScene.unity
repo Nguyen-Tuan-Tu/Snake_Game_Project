@@ -1803,6 +1803,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1711237358}
   VictoryPanel: {fileID: 1571297043}
   ReadyPanel: {fileID: 851048487}
+  keywordText: {fileID: 1756638413}
   CountDownText: {fileID: 1030125834}
 --- !u!1 &486589585
 GameObject:
@@ -2083,6 +2084,15 @@ MonoBehaviour:
   - {fileID: -360979742, guid: 829963fcb6889d64da2ea7ec09c7b2c6, type: 3}
   - {fileID: -916955248, guid: 829963fcb6889d64da2ea7ec09c7b2c6, type: 3}
   letterFoodPrefab: {fileID: 3995047400260261031, guid: 19a5a5415270f394b8780012049b3455, type: 3}
+  animalWords:
+  - CHICKEN
+  - SNAKE
+  - TIGER
+  - DUCK
+  - CAT
+  - DOG
+  - DUCK
+  - LION
   targetWord: CHICKEN
 --- !u!4 &566336701
 Transform:
@@ -7627,7 +7637,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Challenger Keywords : CHICKEN'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}

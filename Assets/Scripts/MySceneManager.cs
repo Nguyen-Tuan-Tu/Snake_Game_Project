@@ -16,6 +16,8 @@ public class MySceneManager : MonoBehaviour
 
     public GameObject ReadyPanel;
 
+    public TextMeshProUGUI keywordText;
+
     public TextMeshProUGUI CountDownText;
 
     private void Awake()
@@ -69,6 +71,18 @@ public class MySceneManager : MonoBehaviour
     {
         ReadyPanel.SetActive(true);
         Time.timeScale = 0f;
+    }
+
+    public void UpdateKeywordUI(string word)
+    {
+        if(keywordText != null)
+        {
+            keywordText.text = "Challenger Keywords : " + word;
+        }
+        else 
+        {
+            Debug.LogError("Ní ơi, ní chưa kéo Txt_C_KeyWord vào ô Keyword Text rồi!");
+        }
     }
     public void ReadyGame()
     {

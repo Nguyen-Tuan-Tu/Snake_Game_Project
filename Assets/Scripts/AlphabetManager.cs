@@ -11,8 +11,10 @@ public class AlphabetManager : MonoBehaviour
     public Sprite[] alphabetSprite; // Kéo toàn bộ chữ cái đã cắt vào đây
     public GameObject letterFoodPrefab; // Kéo cái Prefab LetterFood vào đây
     //public int foodCount = 2;
-    [Header("Logic từ vựng")]
-    public string targetWord = "CHICKEN";
+    [Header("Logic từ vựng(Nâng cấp)")]
+    // Tạo danh sách các từ chủ đề động vật
+    public string[] animalWords = {"CHICKEN", "SNAKE", "TIGER", "DUCK", "CAT", "DOG", "DUCK", "LION" };
+    [HideInInspector] public string targetWord;
     private int charIndex = 0;  // Thứ tự của kí tự trong từ
     // Danh sách để quản lý các chữ cái đang hiện có trên sân
     private List<GameObject> activeFood = new List<GameObject>();
@@ -23,7 +25,22 @@ public class AlphabetManager : MonoBehaviour
     
     private void Start()
     {
+        PickRandomWord();
         SpawnNewSet();
+    }
+    //_________HÀM CHỌN TỪ NGẪU NHIÊN TỪ DANH SÁCH_________
+    public void PickRandomWord()
+    {
+        if(animalWords.Length > 0)
+        {
+            int randomIndex = Random.Range(0, animalWords.Length);
+            targetWord = animalWords[randomIndex];
+            charIndex = 0;
+            if(MySceneManager.Instance != null)
+            {
+                MySceneManager.Instance.UpdateKeywordUI(targetWord);
+            }
+        }
     }
     public void SpawnNewSet()
     {
