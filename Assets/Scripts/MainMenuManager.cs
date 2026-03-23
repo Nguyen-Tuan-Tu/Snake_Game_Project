@@ -14,6 +14,13 @@ public class MainMenuManager : MonoBehaviour
     public void StartGame()
     {
         Time.timeScale = 1f;
+        
+        // ÉP Reset ngay tại đây cho chắc ăn [cite: 2026-03-23]
+        if (AlphabetManager.Instance != null)
+        {
+            AlphabetManager.Instance.ResetProgressForNewGame();
+        }
+
         SceneManager.LoadScene("GameScene");
     }
     //_________HÀM THOÁT GAME__________

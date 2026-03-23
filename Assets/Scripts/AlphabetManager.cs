@@ -13,22 +13,142 @@ public class AlphabetManager : MonoBehaviour
     //public int foodCount = 2;
     [Header("Logic từ vựng(Nâng cấp)")]
     // Tạo danh sách các từ chủ đề động vật
-    public string[] animalWords = {"CHICKEN", "SNAKE", "TIGER", "DUCK", "CAT", "DOG", "DUCK", "LION" };
+    public string[] animalWords = {"CHICKEN", "SNAKE", "TIGER", "DUCK", "CAT", "DOG", "LION","MONKEY", "ZEBRA", "GIRAFFE", "HIPPO" };
+    // Tạo 1 danh sách mới để trộn các từ khóa
+    private List<string> shuffledWords = new List<string>();
+    private int currentWordIndex = 0;
     [HideInInspector] public string targetWord;
     private int charIndex = 0;  // Thứ tự của kí tự trong từ
     // Danh sách để quản lý các chữ cái đang hiện có trên sân
     private List<GameObject> activeFood = new List<GameObject>();
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Giữ Manager này xuyên suốt các màn chơi
+            PrepareWordList(); // Trộn bài ngay từ đầu
+        } else {
+            Destroy(gameObject);
+        }
     }
-    
-    private void Start()
+    //__________HÀM TRỘN DANH SÁCH TỪ KHÓA_________
+    void PrepareWordList()
     {
-        PickRandomWord();
-        SpawnNewSet();
+        shuffledWords = new List<string>(animalWords);
+        // Thuật toán xáo bài Fisher-Yates
+        for (int i = 0; i < shuffledWords.Count; i++) {
+            string temp = shuffledWords[i];
+            int randomIndex = Random.Range(i, shuffledWords.Count);
+            shuffledWords[i] = shuffledWords[randomIndex];
+            shuffledWords[randomIndex] = temp;
+        }
+        currentWordIndex = 0;
+        PickNextWordFromList();
     }
-    //_________HÀM CHỌN TỪ NGẪU NHIÊN TỪ DANH SÁCH_________
+    //________HÀM LẤY TỪ TIẾP THEO TRONG DANH SÁCH ĐÃ TRỘN________
+    public void PickNextWordFromList()
+    {
+        if (currentWordIndex < shuffledWords.Count) {
+            targetWord = shuffledWords[currentWordIndex];
+            charIndex = 0;
+            currentWordIndex++; // Tăng lên để màn sau lấy từ kế tiếp
+            
+            if (MySceneManager.Instance != null)
+                MySceneManager.Instance.UpdateKeywordUI(targetWord);
+        } else {
+            Debug.Log("Đã chơi hết sạch từ vựng rồi ní ơi!");
+            // Ní có thể cho trộn lại từ đầu hoặc hiện bảng "Phá đảo" ở đây
+            PrepareWordList(); 
+        }
+    }
+    private void OnEnable()
+    {
+        // Đăng ký sự kiện: Mỗi khi một Scene được load xong, gọi hàm OnSceneLoaded
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        // Hủy đăng ký để tránh rác bộ nhớ
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    // Hàm này sẽ tự động chạy MỖI KHI ní load sang màn mới (kể cả dùng LoadScene)
+    void OnSceneLoaded(UnityEngine.SceneManagement.Scene m, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        // CHỈ CHẠY LOGIC KHI TÊN SCENE LÀ "GameScene" (Hoặc tên scene chơi game của ní)
+        if (m.name == "GameScene") 
+        {
+            StopAllCoroutines();
+            StartCoroutine(InitNewLevelRoutine());
+        }
+        else 
+        {
+            // Nếu ở Menu, ta xóa sạch mồi cũ đi cho rảnh nợ
+            foreach(GameObject food in activeFood) if(food != null) Destroy(food);
+            activeFood.Clear();
+        }
+    }
+    IEnumerator InitNewLevelRoutine()
+    {
+        Debug.Log("<color=cyan>== BẮT ĐẦU LOAD MÀN MỚI ==</color>");
+        
+        // 1. Kiểm tra giá trị biến targetWord ngay khi vừa sang màn
+        Debug.Log("1. Giá trị targetWord hiện tại: " + targetWord);
+        Debug.Log("2. Chỉ số charIndex hiện tại: " + charIndex);
+
+        // Đợi 1 frame để các Instance khác (MySceneManager) kịp khởi tạo
+        yield return new WaitForEndOfFrame();
+
+        // 3. Kiểm tra MySceneManager đã tồn tại chưa
+        if (MySceneManager.Instance != null) {
+            Debug.Log("3. Đã tìm thấy MySceneManager. Đang gọi UpdateUI...");
+            MySceneManager.Instance.UpdateKeywordUI(targetWord);
+        } else {
+            Debug.LogWarning("3. LỖI: Không tìm thấy MySceneManager Instance!");
+        }
+
+        // Đợi thêm một xíu cho chắc chắn trước khi sinh mồi
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        // 4. Kiểm tra xem có đủ điều kiện sinh mồi không
+        if (!string.IsNullOrEmpty(targetWord)) {
+            Debug.Log("4. Đang tiến hành SpawnNewSet cho từ: " + targetWord);
+            SpawnNewSet();
+        } else {
+            Debug.LogError("4. LỖI: targetWord bị trống, không thể sinh mồi!");
+        }
+        
+        Debug.Log("<color=cyan>== KẾT THÚC QUÁ TRÌNH KHỞI TẠO MÀN ==</color>");
+    }
+    public void ResetProgressForNewGame()
+    {
+        charIndex = 0; 
+        targetWord = ""; // Xóa từ khóa cũ để Coroutine bốc từ mới hoàn toàn
+        
+        // Gọi WordManager dọn dẹp bảng chữ cái (ní nhớ kéo Instance vào nhé)
+        if (WordManager.Instance != null)
+        {
+            WordManager.Instance.ResetWordUI();
+        }
+        
+        PrepareWordList(); 
+        Debug.Log("Đã Reset sạch sẽ từ biến đến UI!");
+    }
+    // ________Hàm này chỉ dành riêng cho nút Replay_________
+    public void ResetCurrentWord()
+    {
+        charIndex = 0; // Đưa về chữ cái đầu tiên của từ hiện tại
+        
+        // Dọn dẹp bảng UI chữ cái đã ăn (nếu ní có dùng WordManager)
+        if (WordManager.Instance != null)
+        {
+            WordManager.Instance.ResetWordUI();
+        }
+
+        Debug.Log("Đã Reset từ hiện tại: " + targetWord + ". Mời ní ăn lại từ đầu!");
+    }
+        //_________HÀM CHỌN TỪ NGẪU NHIÊN TỪ DANH SÁCH_________
     public void PickRandomWord()
     {
         if(animalWords.Length > 0)

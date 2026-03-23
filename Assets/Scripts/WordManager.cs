@@ -44,4 +44,13 @@ public class WordManager : MonoBehaviour
             img.color = new Color(1,1,1,0.2f);
         }
     }
+    public void ResetWordUI()
+    {
+        // Tìm tất cả các Icon chữ cái đang hiện trên bảng và xóa sạch [cite: 2026-03-23]
+        foreach (Transform child in transform) 
+        {
+            Destroy(child.gameObject);
+        }
+        Debug.Log("Đã dọn dẹp bảng chữ cái cũ!");
+    }
 }

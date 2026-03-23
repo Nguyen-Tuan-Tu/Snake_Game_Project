@@ -39,6 +39,14 @@ public class MySceneManager : MonoBehaviour
     public void RestartGame()
     {
         Time.timeScale = 1f;
+
+        // QUAN TRỌNG: Trước khi load lại, bảo AlphabetManager reset tiến trình của TỪ HIỆN TẠI
+        if (AlphabetManager.Instance != null)
+        {
+            // Chúng ta sẽ tạo một hàm mới tên là ResetCurrentWord để không làm xáo trộn danh sách từ
+            AlphabetManager.Instance.ResetCurrentWord();
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -75,13 +83,15 @@ public class MySceneManager : MonoBehaviour
 
     public void UpdateKeywordUI(string word)
     {
-        if(keywordText != null)
-        {
-            keywordText.text = "Challenger Keywords : " + word;
+        Debug.Log("UI nhận được từ khóa: " + word);
+        // Nếu dây bị None, code tự đi tìm Object trong Hierarchy
+        if (keywordText == null) {
+            GameObject go = GameObject.Find("Txt_C_KeyWord");
+            if (go != null) keywordText = go.GetComponent<TextMeshProUGUI>();
         }
-        else 
-        {
-            Debug.LogError("Ní ơi, ní chưa kéo Txt_C_KeyWord vào ô Keyword Text rồi!");
+
+        if (keywordText != null) {
+            keywordText.text = "Challenger Keywords : " + word;
         }
     }
     public void ReadyGame()
@@ -115,4 +125,15 @@ public class MySceneManager : MonoBehaviour
         Time.timeScale = 1f;
         AudioManager.Instance.UnmuteBGM();
     }
-}
+    public void OnClickNextLevel()
+    {
+        // 1. Bốc sẵn từ mới trong danh sách
+        if (AlphabetManager.Instance != null) {
+            AlphabetManager.Instance.PickNextWordFromList();
+        }
+
+        // 2. Load Scene (Khi Scene mới hiện ra, hàm Start của AlphabetManager ở Bước 1 sẽ tự chạy)
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+}   
