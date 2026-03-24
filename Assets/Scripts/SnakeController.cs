@@ -267,6 +267,8 @@ public class SnakeController : MonoBehaviour
             // KIỂM TRA: NẾU ĂN ĐÚNG CHỮ [cite: 2026-03-01]
             if (item != null && item.isCorrect)
             {
+                // Gọi hiệu ứng bay kí tụ lên bảng keyword
+                AlphabetManager.Instance.PlayFlyAnimation(other.transform.position, item.mySprite);
                 _audioSource.PlayOneShot(eatSound);
                 GameObject effect = Instantiate(eatEffectPrefab, other.transform.position, Quaternion.identity);
                 Destroy(effect, 1f);

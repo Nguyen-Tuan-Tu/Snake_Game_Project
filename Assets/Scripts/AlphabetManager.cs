@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -21,6 +23,9 @@ public class AlphabetManager : MonoBehaviour
     private int charIndex = 0;  // Thứ tự của kí tự trong từ
     // Danh sách để quản lý các chữ cái đang hiện có trên sân
     private List<GameObject> activeFood = new List<GameObject>();
+    [Header("Hiệu ứng bay")]
+    public GameObject flyingLetterPrefab; // Kéo cái Prefab FlyingLetter vào đây
+    public Transform uiTargetContainer; // Kéo cái bảng Keyword vào đây
     private void Awake()
     {
         if (Instance == null) {
@@ -100,6 +105,13 @@ public class AlphabetManager : MonoBehaviour
         // Đợi 1 frame để các Instance khác (MySceneManager) kịp khởi tạo
         yield return new WaitForEndOfFrame();
 
+        // Đảm bảo cái bảng Keywords của ní trong Hierarchy tên là "KeyWords"
+        GameObject keywordGo = GameObject.Find("KeyWords");
+        if (keywordGo != null)
+        {
+            uiTargetContainer = keywordGo.GetComponent<RectTransform>();
+            Debug.Log("Đã nối lại dây UI cho màn mới thành công!");
+        }
         // 3. Kiểm tra MySceneManager đã tồn tại chưa
         if (MySceneManager.Instance != null) {
             Debug.Log("3. Đã tìm thấy MySceneManager. Đang gọi UpdateUI...");
@@ -164,6 +176,13 @@ public class AlphabetManager : MonoBehaviour
     }
     public void SpawnNewSet()
     {
+        // --- BƯỚC KIỂM TRA AN TOÀN (CHỐNG LỖI VĂNG MẢNG)
+        if (string.IsNullOrEmpty(targetWord) || charIndex >= targetWord.Length) 
+        {
+            Debug.LogWarning("Chưa có từ khóa hoặc charIndex vượt quá độ dài từ! Đang tự sửa...");
+            charIndex = 0; // Reset lại chỉ số
+            if (string.IsNullOrEmpty(targetWord)) PickNextWordFromList(); // Bốc từ mới nếu trống
+        }
         // 1. Xóa sạch các chữ cũ đang có trên màn hình
         foreach(GameObject food in activeFood)
         {
@@ -244,7 +263,39 @@ public class AlphabetManager : MonoBehaviour
                 if (bgmSource != null) bgmSource.Stop();
             }
             // Hiện bảng Victory
-            MySceneManager.Instance.ShowVictory();
+            StartCoroutine(VictoryDelayRoutine());
+        }
+    }
+    IEnumerator VictoryDelayRoutine()
+    {
+        // Đợi khoảng 0.4 giây cho hiệu ứng bay hoàn tất
+        yield return new WaitForSeconds(0.4f);
+
+        AudioManager.Instance.MuteBGM();
+        MySceneManager.Instance.ShowVictory();
+    }
+
+    //_________HÀM GỌI HIỆU ỨNG KÍ TỰ BAY_______
+    public void PlayFlyAnimation(Vector3 spawnWorldPos, Sprite letterSprite)
+    {
+        Canvas mainCanvas = FindObjectOfType<Canvas>();
+        
+        if (mainCanvas != null)
+        {
+            GameObject fly = Instantiate(flyingLetterPrefab, mainCanvas.transform);
+            fly.transform.SetAsLastSibling();
+            
+            // 1. Ép Scale về chuẩn (1, 1, 1)
+            fly.transform.localScale = Vector3.one;
+            
+            // 2. Ép Z Position về 0 để không bị che khuất
+            RectTransform flyRect = fly.GetComponent<RectTransform>();
+            Vector3 currentPos = flyRect.anchoredPosition3D;
+            flyRect.anchoredPosition3D = new Vector3(currentPos.x, currentPos.y, 0f);
+
+            // 3. Khởi tạo di chuyển
+            Vector3 targetPos = uiTargetContainer.position;
+            fly.GetComponent<FlyingLetter>().Init(spawnWorldPos, targetPos, letterSprite);
         }
     }
 }
