@@ -38,6 +38,8 @@ public class SnakeController : MonoBehaviour
     public TMP_Text PlayerScoreText;    // Biến hiển thị điểm khi kết thúc
     private int _score = 0; // Biến lưu điểm hiện tại
 
+    public bool canMovie = true; // Biến cho phép rắn di chuyển
+
     // Danh sách chứa toàn bộ các đốt(cả đầu)
     private List<Transform> _segments = new List<Transform>();
 
@@ -131,8 +133,8 @@ public class SnakeController : MonoBehaviour
     //_________HÀM CẬP NHẬT VỊ TRÍ CHO RẮN KHI DI CHUYỂN________
     private void FixedUpdate()
     {
-        // CHỈ CHO PHÉP DI CHUYỂN KHI ĐÃ ĐẾN GIỜ (dựa trên moveInterval)
-        if (Time.time < nextMoveTime)
+        // CHỈ CHO PHÉP DI CHUYỂN KHI ĐÃ ĐẾN GIỜ hoặc canMove = true (dựa trên moveInterval)
+        if (!canMovie || Time.time < nextMoveTime)
         {
             return; // Nếu chưa đến lúc thì thoát hàm, không làm gì cả
         }

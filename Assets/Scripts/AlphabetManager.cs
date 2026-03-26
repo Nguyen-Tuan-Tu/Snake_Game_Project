@@ -255,13 +255,13 @@ public class AlphabetManager : MonoBehaviour
         }
         else
         {
-            // Tắt nhạc nền game
-            GameObject bgm = GameObject.Find("BackgroundMusic");
-            if (bgm != null)
+            // Cho rắn dừng lại
+            if(SnakeController.Instance != null)
             {
-                AudioSource bgmSource = bgm.GetComponent<AudioSource>();
-                if (bgmSource != null) bgmSource.Stop();
+                SnakeController.Instance.canMovie = false;
             }
+            // Tắt nhạc nền game
+            AudioManager.Instance.MuteBGM();
             // Hiện bảng Victory
             StartCoroutine(VictoryDelayRoutine());
         }
@@ -269,7 +269,7 @@ public class AlphabetManager : MonoBehaviour
     IEnumerator VictoryDelayRoutine()
     {
         // Đợi khoảng 0.4 giây cho hiệu ứng bay hoàn tất
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
 
         AudioManager.Instance.MuteBGM();
         MySceneManager.Instance.ShowVictory();

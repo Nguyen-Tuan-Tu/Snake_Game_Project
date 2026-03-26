@@ -1283,7 +1283,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_54
+      name: NEXT
       rect:
         serializedVersion: 2
         x: 74
@@ -1556,7 +1556,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_67
+      name: EXIT
       rect:
         serializedVersion: 2
         x: 573
@@ -1613,6 +1613,7 @@ TextureImporter:
       BoardFrame: 21300022
       Button1: 21300014
       Button2: 21300016
+      EXIT: 21300120
       GUI_0: 21300000
       GUI_1: 21300002
       GUI_10: 21300020
@@ -1645,7 +1646,6 @@ TextureImporter:
       GUI_51: 21300088
       GUI_52: 21300090
       GUI_53: 21300092
-      GUI_54: 21300094
       GUI_55: 21300096
       GUI_56: 21300098
       GUI_57: 21300100
@@ -1659,11 +1659,11 @@ TextureImporter:
       GUI_64: 21300114
       GUI_65: 21300116
       GUI_66: 21300118
-      GUI_67: 21300120
       GUI_68: 21300122
       GUI_9: 21300018
       Heart: 21300040
       Menu: 21300072
+      NEXT: 21300094
       Pause: 21300066
       Play: 21300068
       Replay: 21300070

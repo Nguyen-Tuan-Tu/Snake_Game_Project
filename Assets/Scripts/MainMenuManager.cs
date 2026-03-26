@@ -10,6 +10,8 @@ public class MainMenuManager : MonoBehaviour
     public GameObject selectPanel;
 
     public GameObject introductionPanel;
+
+    public GameObject TopicMapPanel;
     //__________HÀM BẮT ĐẦU GAME__________
     public void StartGame()
     {
@@ -45,5 +47,13 @@ public class MainMenuManager : MonoBehaviour
     public void OpenIntroduction()
     {
         introductionPanel.SetActive(true);
+    }
+    public void OpenTopicMap()
+    {
+        TopicMapPanel.SetActive(true);
+    }
+    public void CloseMap()
+    {
+        TopicMapPanel.SetActive(false);
     }
 }
