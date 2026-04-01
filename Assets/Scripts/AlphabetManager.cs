@@ -15,7 +15,37 @@ public class AlphabetManager : MonoBehaviour
     //public int foodCount = 2;
     [Header("Logic từ vựng(Nâng cấp)")]
     // Tạo danh sách các từ chủ đề động vật
-    public string[] animalWords = {"CHICKEN", "SNAKE", "TIGER", "DUCK", "CAT", "DOG", "LION","MONKEY", "ZEBRA", "GIRAFFE", "HIPPO" };
+    public string[] currentWordList = {"CHICKEN", "SNAKE", "TIGER", "DUCK", "CAT", "DOG", "LION","MONKEY", "ZEBRA", "GIRAFFE", "HIPPO" };
+    // List chứa  15 file TopicData
+    public List<TopicData> allTopics; // Danh sách các chủ đề
+    private TopicData currentTopic; // Chủ đề được chọn cho màn chơi
+
+    private string[] activeWordList; // Mảng từ vựng của chủ đề đang chọn
+
+    public bool shouldOpenMapOnMenuLoad = false;
+    public int currentSelectedTopicIndex = 0; // Lưu vị trí chủ đề đang chọn
+    public void StartTopic() // Bỏ cái (int index) đi
+    {
+        // Dùng luôn cái biến toàn cục đã lưu
+        int index = currentSelectedTopicIndex; 
+
+        if(index < 0 || index >= allTopics.Count) return;
+
+        currentTopic = allTopics[index];
+        activeWordList = currentTopic.words; // Nạp từ từ ScriptableObject
+
+        currentWordIndex = 0;
+        charIndex = 0;
+
+        PrepareWordList(); // Trộn từ
+        // 3. QUAN TRỌNG: Bốc từ đầu tiên ra NGAY LẬP TỨC để gán vào targetWord
+        if (shuffledWords.Count > 0)
+        {
+            targetWord = shuffledWords[currentWordIndex];
+            currentWordIndex++; // Tăng index để chuẩn bị cho từ tiếp theo
+            Debug.Log("Đã nạp từ đầu tiên cho Game: " + targetWord);
+        }
+    }
     // Tạo 1 danh sách mới để trộn các từ khóa
     private List<string> shuffledWords = new List<string>();
     private int currentWordIndex = 0;
@@ -39,8 +69,10 @@ public class AlphabetManager : MonoBehaviour
     //__________HÀM TRỘN DANH SÁCH TỪ KHÓA_________
     void PrepareWordList()
     {
-        shuffledWords = new List<string>(animalWords);
-        // Thuật toán xáo bài Fisher-Yates
+        if (activeWordList == null || activeWordList.Length == 0) return;
+
+        shuffledWords = new List<string>(activeWordList);
+        
         for (int i = 0; i < shuffledWords.Count; i++) {
             string temp = shuffledWords[i];
             int randomIndex = Random.Range(i, shuffledWords.Count);
@@ -48,7 +80,12 @@ public class AlphabetManager : MonoBehaviour
             shuffledWords[randomIndex] = temp;
         }
         currentWordIndex = 0;
-        PickNextWordFromList();
+        
+        // Chỉ bốc từ nếu đang ở trong GameScene
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "GameScene")
+        {
+            PickNextWordFromList();
+        }
     }
     //________HÀM LẤY TỪ TIẾP THEO TRONG DANH SÁCH ĐÃ TRỘN________
     public void PickNextWordFromList()
@@ -62,8 +99,8 @@ public class AlphabetManager : MonoBehaviour
                 MySceneManager.Instance.UpdateKeywordUI(targetWord);
         } else {
             Debug.Log("Đã chơi hết sạch từ vựng rồi ní ơi!");
-            // Ní có thể cho trộn lại từ đầu hoặc hiện bảng "Phá đảo" ở đây
-            PrepareWordList(); 
+            MySceneManager.Instance.ShowFinishTP();
+            Time.timeScale = 0f;
         }
     }
     private void OnEnable()
@@ -163,10 +200,10 @@ public class AlphabetManager : MonoBehaviour
         //_________HÀM CHỌN TỪ NGẪU NHIÊN TỪ DANH SÁCH_________
     public void PickRandomWord()
     {
-        if(animalWords.Length > 0)
+        if(currentWordList.Length > 0)
         {
-            int randomIndex = Random.Range(0, animalWords.Length);
-            targetWord = animalWords[randomIndex];
+            int randomIndex = Random.Range(0, currentWordList.Length);
+            targetWord = currentWordList[randomIndex];
             charIndex = 0;
             if(MySceneManager.Instance != null)
             {
@@ -272,7 +309,17 @@ public class AlphabetManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         AudioManager.Instance.MuteBGM();
-        MySceneManager.Instance.ShowVictory();
+        
+        bool isLastWord = (currentWordIndex >= currentWordList.Length);
+
+        if (isLastWord)
+        {
+            MySceneManager.Instance.ShowFinishTP();
+        }
+        else
+        {
+            MySceneManager.Instance.ShowVictory();
+        }
     }
 
     //_________HÀM GỌI HIỆU ỨNG KÍ TỰ BAY_______
@@ -298,4 +345,5 @@ public class AlphabetManager : MonoBehaviour
             fly.GetComponent<FlyingLetter>().Init(spawnWorldPos, targetPos, letterSprite);
         }
     }
+
 }

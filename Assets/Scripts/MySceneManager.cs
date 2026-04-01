@@ -20,6 +20,10 @@ public class MySceneManager : MonoBehaviour
 
     public TextMeshProUGUI CountDownText;
 
+    public GameObject FinishTP_Panel;
+
+
+
     private void Awake()
     {
         if(Instance == null ) Instance = this;
@@ -135,5 +139,24 @@ public class MySceneManager : MonoBehaviour
         // 2. Load Scene (Khi Scene mới hiện ra, hàm Start của AlphabetManager ở Bước 1 sẽ tự chạy)
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void ShowFinishTP()
+    {
+        // Nếu object đã bị destroy (do chuyển Scene) thì thoát luôn, không làm gì cả [cite: 2026-03-31]
+        if (FinishTP_Panel == null) return; 
+
+        FinishTP_Panel.SetActive(true);
+        Time.timeScale = 0f;
+    }
+    public void BackToTopicMap()
+    {
+        // 1. Mở lại thời gian (để sang Menu không bị đứng hình)
+        Time.timeScale = 1f;
+
+        // 2. Cắm cờ: "Tí nữa load xong Menu thì mở Map lên giùm tui"
+        AlphabetManager.Instance.shouldOpenMapOnMenuLoad = true; 
+
+        // 3. Load Scene MainMenu (Ní thay đúng tên Scene của ní vào nhé)
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"); 
     }
 }   

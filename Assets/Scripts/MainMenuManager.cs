@@ -12,6 +12,12 @@ public class MainMenuManager : MonoBehaviour
     public GameObject introductionPanel;
 
     public GameObject TopicMapPanel;
+    public static MainMenuManager Instance;
+    private void Awake()
+    {
+        // Gán chính cái Script này vào biến Instance ngay khi game khởi động [cite: 2026-03-01]
+        Instance = this;
+    }
     //__________HÀM BẮT ĐẦU GAME__________
     public void StartGame()
     {
@@ -20,7 +26,7 @@ public class MainMenuManager : MonoBehaviour
         // ÉP Reset ngay tại đây cho chắc ăn [cite: 2026-03-23]
         if (AlphabetManager.Instance != null)
         {
-            AlphabetManager.Instance.ResetProgressForNewGame();
+            AlphabetManager.Instance.StartTopic();
         }
 
         SceneManager.LoadScene("GameScene");
