@@ -2075,6 +2075,7 @@ MonoBehaviour:
   keywordText: {fileID: 1756638413}
   CountDownText: {fileID: 1030125834}
   FinishTP_Panel: {fileID: 844445196}
+  topicNameLabel: {fileID: 820392758}
 --- !u!1 &484645281
 GameObject:
   m_ObjectHideFlags: 0
@@ -2996,7 +2997,7 @@ GameObject:
   - component: {fileID: 820392759}
   - component: {fileID: 820392758}
   m_Layer: 5
-  m_Name: Txt_Snake_Speed
+  m_Name: Txt_NameTopic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6290,7 +6291,7 @@ GameObject:
   - component: {fileID: 1470276419}
   - component: {fileID: 1470276418}
   m_Layer: 5
-  m_Name: Snake_Speed
+  m_Name: NameTopic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

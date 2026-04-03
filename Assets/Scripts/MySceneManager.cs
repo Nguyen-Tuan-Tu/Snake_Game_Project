@@ -22,7 +22,7 @@ public class MySceneManager : MonoBehaviour
 
     public GameObject FinishTP_Panel;
 
-
+    public TMP_Text topicNameLabel;
 
     private void Awake()
     {
@@ -158,5 +158,13 @@ public class MySceneManager : MonoBehaviour
 
         // 3. Load Scene MainMenu (Ní thay đúng tên Scene của ní vào nhé)
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu"); 
+    }
+    // Hàm này sẽ được gọi để cập nhật tên
+    public void UpdateTopicNameUI(string name)
+    {
+        if (topicNameLabel != null)
+        {
+            topicNameLabel.text = name.ToUpper(); // Cho viết hoa hết
+        }
     }
 }   

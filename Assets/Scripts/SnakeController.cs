@@ -79,7 +79,7 @@ public class SnakeController : MonoBehaviour
         // Lấy component AudioSource đang gắn trên con rắn
         _audioSource = GetComponent<AudioSource>();
 
-        UpdateSpeedUI(); // Hiển thị tốc độ của rắn
+        //UpdateSpeedUI(); // Hiển thị tốc độ của rắn
     }
     //__________HÀM KẾT THÚC GAME_________
     private void EndGame()
@@ -361,16 +361,16 @@ public class SnakeController : MonoBehaviour
     //     _score++;
     //     scoreText.text = "Score : " + _score.ToString();
     // }
-    public void UpdateSpeedUI()
-    {
-        string speedName = "";
-        if(moveInterval >= 0.2f) speedName = "Slow";
-        else if(moveInterval <= 0.05f) speedName = "Fast";
-        else speedName = "Medium";
+    // public void UpdateSpeedUI()
+    // {
+    //     string speedName = "";
+    //     if(moveInterval >= 0.2f) speedName = "Slow";
+    //     else if(moveInterval <= 0.05f) speedName = "Fast";
+    //     else speedName = "Medium";
 
-        // Gán nội dung vào bảng hiển thị
-        speedDisplayText.text = "" + speedName;
-    }
+    //     // Gán nội dung vào bảng hiển thị
+    //     speedDisplayText.text = "" + speedName;
+    // }
 
     public void ShowPlayerScore()
     {

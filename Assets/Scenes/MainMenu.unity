@@ -3683,14 +3683,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1032524837}
         m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
-        m_MethodName: SetSpeedSlow
-        m_Mode: 1
+        m_MethodName: SelectLevel
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Slow
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &851974791
@@ -3749,7 +3749,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &904495822
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3765,9 +3765,9 @@ RectTransform:
   - {fileID: 1827854193}
   m_Father: {fileID: 1384128384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 217.5, y: -98.97682}
   m_SizeDelta: {x: 330, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &904495823
@@ -4327,6 +4327,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ef45ca4b5c37f446ba2805fed2fe6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  greenSprite: {fileID: 21300000, guid: bf625ae84f769384fb0cd1cc52d14971, type: 3}
+  redSprite: {fileID: 21300000, guid: cb1fee516d444164abc17d4b2050d4c2, type: 3}
+  slowBtnImg: {fileID: 851974791}
+  mediumBtnImg: {fileID: 1131947150}
+  fastBtnImg: {fileID: 1447944328}
 --- !u!1 &1043515211
 GameObject:
   m_ObjectHideFlags: 0
@@ -5161,14 +5166,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1032524837}
         m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
-        m_MethodName: SetSpeedMedium
-        m_Mode: 1
+        m_MethodName: SelectLevel
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Medium
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1131947150
@@ -5191,7 +5196,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9c79225b22ac62249b314de3e39f7f0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bf625ae84f769384fb0cd1cc52d14971, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6597,6 +6602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7558bea99212fb4439c67a283c1c1bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentLevelName: Medium
   alphabetSprite:
   - {fileID: 1084322534, guid: 829963fcb6889d64da2ea7ec09c7b2c6, type: 3}
   - {fileID: -566962973, guid: 829963fcb6889d64da2ea7ec09c7b2c6, type: 3}
@@ -6645,6 +6651,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 38c570dc2297e554e9706384f0ed50bb, type: 2}
   - {fileID: 11400000, guid: 228ed11f8277a944ca43af5ce722dbbe, type: 2}
   shouldOpenMapOnMenuLoad: 0
+  currentSelectedTopicIndex: 0
   targetWord: 
   flyingLetterPrefab: {fileID: 5735623664803426160, guid: cb748e4819be8f44ba6df5c6c9653b7b, type: 3}
   uiTargetContainer: {fileID: 0}
@@ -6674,6 +6681,7 @@ GameObject:
   - component: {fileID: 1352107616}
   - component: {fileID: 1352107618}
   - component: {fileID: 1352107617}
+  - component: {fileID: 1352107619}
   m_Layer: 5
   m_Name: Info_Topic
   m_TagString: Untagged
@@ -6741,6 +6749,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352107615}
   m_CullTransparentMesh: 1
+--- !u!95 &1352107619
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1352107615}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dfe0f6df8bd51b4459c6c8c8e48ef960, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1384128383
 GameObject:
   m_ObjectHideFlags: 0
@@ -6773,9 +6802,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 904495822}
+  - {fileID: 319962449}
   - {fileID: 1972148464}
   - {fileID: 327157926}
-  - {fileID: 319962449}
   - {fileID: 1129529898}
   m_Father: {fileID: 479899350}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7335,14 +7364,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1032524837}
         m_TargetAssemblyTypeName: LevelSelector, Assembly-CSharp
-        m_MethodName: SetSpeedFast
-        m_Mode: 1
+        m_MethodName: SelectLevel
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Fast
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1447944328
@@ -7365,7 +7394,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cb1fee516d444164abc17d4b2050d4c2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bf625ae84f769384fb0cd1cc52d14971, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

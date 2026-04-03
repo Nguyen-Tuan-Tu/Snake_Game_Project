@@ -8,6 +8,8 @@ using UnityEngine.TextCore.Text;
 public class AlphabetManager : MonoBehaviour
 {
     public static AlphabetManager Instance; // Để các script khác dễ dàng gọi
+    [Header("Cài đặt tốc độ rắn")]
+    public string currentLevelName = "Medium"; // Mặc định là medium
 
     [Header("Cài đặt chữ cái")]
     public Sprite[] alphabetSprite; // Kéo toàn bộ chữ cái đã cắt vào đây
@@ -141,6 +143,13 @@ public class AlphabetManager : MonoBehaviour
 
         // Đợi 1 frame để các Instance khác (MySceneManager) kịp khởi tạo
         yield return new WaitForEndOfFrame();
+
+        // Cập nhật tên chủ đề lên UI [cite: 2026-03-31]
+        if (MySceneManager.Instance != null && currentTopic != null)
+        {
+            MySceneManager.Instance.UpdateTopicNameUI(currentTopic.topicName);
+            Debug.Log("Đã hiển thị tên chủ đề: " + currentTopic.topicName);
+        }
 
         // Đảm bảo cái bảng Keywords của ní trong Hierarchy tên là "KeyWords"
         GameObject keywordGo = GameObject.Find("KeyWords");
