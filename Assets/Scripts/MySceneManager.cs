@@ -8,6 +8,7 @@ public class MySceneManager : MonoBehaviour
 {
     public static MySceneManager Instance;
     public GameObject pauseUI;
+    public bool isPaused = false; // Biến này để theo dõi trạng thái Pause
     public GameObject blurPanel;
 
     public GameObject gameOverPanel;
@@ -56,6 +57,8 @@ public class MySceneManager : MonoBehaviour
 
     public void PauseGame()
     {
+        isPaused = true;
+        Debug.Log("<color=orange>HÀM PAUSE ĐÃ ĐƯỢC KÍCH HOẠT!</color> TimeScale hiện tại: " + Time.timeScale);
         blurPanel.SetActive(true);
         pauseUI.SetActive(true);
         Time.timeScale = 0f;
@@ -63,9 +66,10 @@ public class MySceneManager : MonoBehaviour
 
     public void ResumeGame()
     {
+        isPaused = false;
         pauseUI.SetActive(false);
         blurPanel.SetActive(false);
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
     }
 
     public void ShowGameOver()
@@ -106,28 +110,42 @@ public class MySceneManager : MonoBehaviour
 
     IEnumerator CountdownRoutine()
     {
+        // --- SỐ 3 ---
+        while (isPaused) yield return null; // Đợi nếu đang Pause [cite: 2026-03-31]
         CountDownText.gameObject.SetActive(true);
         CountDownText.text = "3";
         yield return new WaitForSecondsRealtime(1f);
         CountDownText.gameObject.SetActive(false);
 
+        // --- SỐ 2 ---
+        while (isPaused) yield return null; // Đợi nếu đang Pause [cite: 2026-03-31]
         CountDownText.gameObject.SetActive(true);
         CountDownText.text = "2";
         yield return new WaitForSecondsRealtime(1f);
         CountDownText.gameObject.SetActive(false);
 
+        // --- SỐ 1 ---
+        while (isPaused) yield return null; // Đợi nếu đang Pause [cite: 2026-03-31]
         CountDownText.gameObject.SetActive(true);
         CountDownText.text = "1";
         yield return new WaitForSecondsRealtime(1f);
         CountDownText.gameObject.SetActive(false);
 
+        // --- CHỮ GO ---
+        while (isPaused) yield return null; // Đợi nếu đang Pause [cite: 2026-03-31]
         CountDownText.gameObject.SetActive(true);
         CountDownText.text = "GO";
         yield return new WaitForSecondsRealtime(0.5f);
         CountDownText.gameObject.SetActive(false);
 
+        // --- KẾT THÚC ---
+        while (isPaused) yield return null; // Check lần cuối trước khi xả Pause [cite: 2026-03-31]
+        
         Time.timeScale = 1f;
-        AudioManager.Instance.UnmuteBGM();
+        if (AudioManager.Instance != null) AudioManager.Instance.UnmuteBGM();
+        
+        // Kích hoạt rắn bò
+        if (SnakeController.Instance != null) SnakeController.Instance.canMovie = true;
     }
     public void OnClickNextLevel()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.ExceptionServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -314,12 +315,12 @@ public class AlphabetManager : MonoBehaviour
     }
     IEnumerator VictoryDelayRoutine()
     {
-        // Đợi khoảng 0.4 giây cho hiệu ứng bay hoàn tất
+        // Đợi khoảng 0.5 giây cho hiệu ứng bay hoàn tất
         yield return new WaitForSeconds(0.5f);
 
         AudioManager.Instance.MuteBGM();
         
-        bool isLastWord = (currentWordIndex >= currentWordList.Length);
+        bool isLastWord = (currentWordIndex >= shuffledWords.Count);
 
         if (isLastWord)
         {
