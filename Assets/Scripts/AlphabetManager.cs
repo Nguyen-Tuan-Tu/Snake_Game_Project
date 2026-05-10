@@ -30,7 +30,7 @@ public class AlphabetManager : MonoBehaviour
     public void StartTopic() // Bỏ cái (int index) đi
     {
         // Dùng luôn cái biến toàn cục đã lưu
-        int index = currentSelectedTopicIndex; 
+        int index = currentSelectedTopicIndex;
 
         if(index < 0 || index >= allTopics.Count) return;
 

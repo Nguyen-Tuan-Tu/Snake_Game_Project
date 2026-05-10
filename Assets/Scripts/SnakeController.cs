@@ -143,6 +143,7 @@ public class SnakeController : MonoBehaviour
         nextMoveTime = Time.time + moveInterval;
         // THUẬT TOÁN DI CHUYỂN ĐUÔI*
         // duyệt ngược từ đốt cuối cùng lên đốt thứ 2
+
         for(int i = _segments.Count - 1; i > 0;i--)
         {
             // đốt sau lấy vị trí của đốt trước
@@ -266,7 +267,7 @@ public class SnakeController : MonoBehaviour
             // 1. Lấy thông tin từ chữ cái vừa đụng trúng
             LetterItem item = other.GetComponent<LetterItem>();
 
-            // KIỂM TRA: NẾU ĂN ĐÚNG CHỮ [cite: 2026-03-01]
+            // KIỂM TRA: NẾU ĂN ĐÚNG CHỮ
             if (item != null && item.isCorrect)
             {
                 // Gọi hiệu ứng bay kí tụ lên bảng keyword
@@ -280,7 +281,7 @@ public class SnakeController : MonoBehaviour
                 Grow();
 
                 // Gọi AlphabetManager để tiến tới chữ cái tiếp theo và sinh bộ mới
-                // Hàm NextLetter này sẽ tự kiểm tra thắng cuộc nếu hết từ CHICKEN [cite: 2026-03-01]
+                // Hàm NextLetter này sẽ tự kiểm tra thắng cuộc nếu hết từ CHICKEN
                 AlphabetManager.Instance.NextLetter(); 
             }
             // KIỂM TRA: NẾU ĂN SAI CHỮ (Gây nhiễu)
@@ -299,7 +300,7 @@ public class SnakeController : MonoBehaviour
                 // Phát âm thanh khi ăn sai kí tự
                 _audioSource.PlayOneShot(wrongSound);
 
-                // Tùy chọn: Sinh lại bộ chữ mới ở vị trí khác
+                //Sinh lại bộ chữ mới ở vị trí khác
                 AlphabetManager.Instance.SpawnNewSet();
             }
         }
@@ -309,16 +310,10 @@ public class SnakeController : MonoBehaviour
         }
     }
 
-    // Gom nhóm đoạn tắt nhạc và EndGame vào một hàm
     public void HandleGameOver()
     {
         _audioSource.PlayOneShot(collideSound);
-        // GameObject bgm = GameObject.Find("BackgroundMusic");
-        // if (bgm != null)
-        // {
-        //     AudioSource bgmSource = bgm.GetComponent<AudioSource>();
-        //     if (bgmSource != null) bgmSource.Stop();
-        // }
+        
         AudioManager.Instance.MuteBGM();
         EndGame();
     }
@@ -329,7 +324,7 @@ public class SnakeController : MonoBehaviour
         bool isInvalid;
         int safetyBreak = 0;
 
-        // Tạm thời tắt Collider của chính nó để không tự va chạm với chính mình [cite: 2026-03-02]
+        // Tạm thời tắt Collider của chính nó để không tự va chạm với chính mình
         Collider2D myCol = food.GetComponent<Collider2D>();
         if (myCol != null) myCol.enabled = false;
 
@@ -338,20 +333,20 @@ public class SnakeController : MonoBehaviour
             float y = Mathf.Round(Random.Range(-7f, 4f));
             newPos = new Vector3(x, y, 0f);
 
-            // QUAN TRỌNG: Cập nhật vị trí vào hệ thống vật lý ngay lập tức [cite: 2026-03-01]
+            // QUAN TRỌNG: Cập nhật vị trí vào hệ thống vật lý ngay lập tức 
             food.transform.position = newPos;
             Physics2D.SyncTransforms(); 
 
-            // Kiểm tra vùng 2.5 ô xung quanh có chạm chữ khác không [cite: 2026-03-01]
+            // Kiểm tra vùng 2.5 ô xung quanh có chạm chữ khác không 
             // Sử dụng OverlapBox vì các chữ cái của bạn hình vuông
             Collider2D hit = Physics2D.OverlapBox(newPos, new Vector2(2.5f, 2.5f), 0f);
             
-            isInvalid = (hit != null); // Nếu chạm bất cứ thứ gì khác là không hợp lệ [cite: 2026-03-01]
+            isInvalid = (hit != null); // Nếu chạm bất cứ thứ gì khác là không hợp lệ 
             
             safetyBreak++;
         } while (isInvalid && safetyBreak < 100);
 
-        // Bật lại Collider sau khi đã tìm được chỗ đỗ xe an toàn [cite: 2026-03-02]
+        // Bật lại Collider sau khi đã tìm được chỗ đỗ xe an toàn 
         if (myCol != null) myCol.enabled = true;
     }
 
