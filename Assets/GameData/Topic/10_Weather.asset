@@ -15,8 +15,14 @@ MonoBehaviour:
   topicName: Weather
   topicIcon: {fileID: 439898207, guid: 38a9f55036f58744eb46a0edc264c5d3, type: 3}
   words:
-  - SUN
-  - RAIN
-  - WIND
-  - SNOW
+  - SUNNY
+  - RAINY
+  - WINDY
+  - STORMY
+  - CLOUDY
+  - FREEZING
+  - THUNDER
+  - RAINBOW
+  - BLIZZARD
+  - LIGHTNING
   isUnlocked: 0

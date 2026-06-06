@@ -20,4 +20,9 @@ MonoBehaviour:
   - POLICE
   - DOCTOR
   - NURSE
+  - PILOT
+  - ACTOR
+  - WRITER
+  - FARMER
+  - ENGINEER
   isUnlocked: 0

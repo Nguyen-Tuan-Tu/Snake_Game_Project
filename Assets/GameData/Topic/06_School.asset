@@ -20,4 +20,9 @@ MonoBehaviour:
   - BOOK
   - RULER
   - BOARD
+  - LESSON
+  - NOTEBOOK
+  - CLASS
+  - COMPASS
+  - ERASER
   isUnlocked: 0

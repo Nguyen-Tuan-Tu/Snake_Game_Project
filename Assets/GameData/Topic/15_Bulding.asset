@@ -19,4 +19,10 @@ MonoBehaviour:
   - VILLA
   - COTTAGE
   - CABIN
+  - PARK
+  - SCHOOL
+  - HOTEL
+  - MARKET
+  - MUSEUM
+  - STATION
   isUnlocked: 0

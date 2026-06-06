@@ -20,4 +20,9 @@ MonoBehaviour:
   - SNACK
   - CHIPS
   - BEEF
+  - SOUP
+  - PIZZA
+  - CHEESE
+  - SAUSAGE
+  - CAKE
   isUnlocked: 0

@@ -21,5 +21,6 @@ MonoBehaviour:
   - THURSDAY
   - FRIDDAY
   - SATURDAY
-  - 
+  - SUNDAY
+  - WEEKEND
   isUnlocked: 0

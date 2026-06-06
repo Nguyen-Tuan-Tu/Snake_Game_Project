@@ -19,5 +19,10 @@ MonoBehaviour:
   - BALL
   - KITE
   - YOYO
-  - BATMAN
+  - ROBOT
+  - TEDDY
+  - SCOOTER
+  - TRAIN
+  - PUZZLE
+  - BLOCKS
   isUnlocked: 0

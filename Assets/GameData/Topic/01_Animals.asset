@@ -20,5 +20,9 @@ MonoBehaviour:
   - TIGER
   - CAT
   - DOG
-  - CHICKEN
+  - PANDA
+  - CAMEL
+  - MONKEY
+  - CHEETAH
+  - PENGUIN
   isUnlocked: 0

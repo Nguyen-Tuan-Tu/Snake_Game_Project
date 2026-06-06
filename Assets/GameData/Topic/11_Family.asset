@@ -17,6 +17,12 @@ MonoBehaviour:
   words:
   - FATHER
   - MOTHER
-  - SICTER
+  - SISTER
   - BROTHER
+  - COUSIN
+  - UNCLE
+  - BROTHER
+  - AUNT
+  - GRANDPA
+  - GRANDMA
   isUnlocked: 0

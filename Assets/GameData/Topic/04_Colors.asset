@@ -18,6 +18,11 @@ MonoBehaviour:
   - BLUE
   - GREEN
   - RED
-  - YEALLOW
+  - YELLOW
   - BLACK
+  - BROWN
+  - ORANGE
+  - PURPLE
+  - SILVER
+  - VIOLET
   isUnlocked: 0

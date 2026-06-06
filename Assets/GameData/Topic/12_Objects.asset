@@ -19,4 +19,10 @@ MonoBehaviour:
   - SOFA
   - TIVI
   - RADIO
+  - CLOCK
+  - CHAIR
+  - PHONE
+  - WATCH
+  - MIRROR
+  - COMPUTER
   isUnlocked: 0

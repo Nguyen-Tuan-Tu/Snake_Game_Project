@@ -18,4 +18,11 @@ MonoBehaviour:
   - STAR
   - OVAL
   - CONE
+  - CUBE
+  - HEART
+  - CIRCLE
+  - SQUARE
+  - SPHERE
+  - DIAMOND
+  - CYLINDER
   isUnlocked: 0

@@ -17,7 +17,12 @@ MonoBehaviour:
   words:
   - HAT
   - COAT
-  - SOCK
+  - SOCKS
   - JEAN
   - SHIRT
+  - DRESS
+  - SKIRT
+  - JACKET
+  - SHORTS
+  - SWEATER
   isUnlocked: 0
